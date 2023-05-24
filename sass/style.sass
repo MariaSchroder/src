@@ -1,0 +1,159 @@
+*, ::after, ::bevore
+    margin: 0
+    padding: 0
+    box-sizing: border-box
+
+
+html
+    // font-size: 10px     // для работы с единицей измерения REM изменяем размер шрифта на 10 px (-> 1rem = 10px)
+    font-size: 62.5%   // для того чтобы браузер перенимал корректно наш шрифт нам нужно размер шрифта передать в процентах ( 10 / 16 * 100 )
+
+
+body
+    font-family: 'Roboto', sans-serif // шрифт без засечек
+    font-weight: 400
+    color: #777777
+    font-size: 1.6rem
+    letter-spacing: .2rem     // Межбуквенное расстояние
+    padding: 5rem
+    background-color: white
+
+.container
+    background-color: #f7f7f7
+
+.header
+    position: relative
+    height: 95vh
+    background: linear-gradient(90deg, rgba(186, 133, 84, 0.7) 0.03%, rgba(1, 1, 1, 0.7) 99.94%), url(../img/header_background.jpg) center / cover no-repeat    // center/cover no-repeat изображение растягивается на весь экран и не дублируется
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 80%)   // clip-path: =>  помогает создавать разные визуальные эфекты (обрезает элименты под разные формы)=> https://bennettfeely.com/clippy/
+    &__logo
+        position: absolute
+        left: 5rem
+        top: 5rem
+        height: 5.6rem
+        height: 7rem
+    &__box
+        position: absolute
+        top: 40%
+        left: 50%
+        transform: translate(-50%, -50%)    //центруем позиционирование по двум осям -> translate(X, Y)
+        width: 100% // при уменьшении окна текст переходит на следю строчку
+        text-align: center  // выравниваем текст по центру
+
+.title-first
+    color: #ffffff
+    &__main
+        display: block  // span строчный элемент, block делает из него блочный(чтобы текст перенёсся на другую строку)
+        font-weight: 800
+        font-size: 5rem
+        line-height: 6rem
+        letter-spacing: 1rem
+        text-transform: uppercase   // трансформирует все буквы в заглавные
+        margin-bottom: 1rem
+        animation-name: leftToRight   // название нашей анимации
+        animation-duration: 1.7s      // как долго будет происходить
+        animation-delay: 1s           // задержка анимации (что сайт успел прогрузиться)
+        animation-timing-function: ease    // плавное ускорение и замедление анимации
+        backface-visibility: hidden     // gомогает нормализовать  поведение анимации
+    &__secondary
+        display: block
+        font-weight: 200
+        font-size: 4rem
+        line-height: 4.8rem
+        letter-spacing: .5rem
+        animation-name: rightToLeft
+        animation-duration: 1.7s
+        animation-delay: 1s
+        animation-timing-function: ease
+        // animation: rightToLeft 1.7s easy 1s  ->  короткая запись
+        backface-visibility: hidden
+        margin-bottom: 6.5rem
+        
+// backface-visibility  ->  Помогает нормализовать/выровнить поведение анимации (пр.прячет задние контуры, уберает дергание элементов)
+
+.btn
+    &:link, &:visited       // состояния ссылки
+        position: relative
+        display: inline-block
+        text-transform: uppercase
+        text-decoration: none
+        color: #777777
+        padding: 1.5rem 4rem
+        background: white
+        border-radius: 5rem
+        transition: all .3s    // задаём длительность переходов или трансформаций
+        font-size: 2rem
+    &:hover
+        transform: translateY(-4px)     // при наведении кнопка приподнимается
+        box-shadow: (0px 4px 4px rgba(0, 0, 0, 0.3))    // тень
+        &::after     // прикручиваем к псевлоклассу псевдоэлемент
+            opacity: 0  // после того как элемент постепенно увеличился он должен исчезнуть
+            transform: scaleX(1.5) scaleY(1.7)    // увеличивает элемент
+    &:active
+        transform: translateY(-2px)     // при нажатии кнопка визуально вдавливается
+    &::after    // : -> псевдоклассы, :: -> псевдоэлементы  =>  псевдоэлемент (дочерний элемент) его нет физически в нашем коде, но с помощью CSS он появится   
+        content: ""     // обезательно указывать это свойство чтобы псевдоэлемент появился
+        background: white
+        width: 100%
+        height: 100%
+        border-radius: 5rem
+        display: inline-block
+        position: absolute
+        top: 0
+        left: 0
+        z-index: -1
+        transition: all .4s  // элемент постепенно увеличивается
+    &_animated
+        animation: btnToUp .5s ease-out .7s
+        animation-fill-mode: backwards  // задерживает/убирает кнопку до анимации
+
+
+
+
+
+
+
+
+// Анимация через CSS 
+
+// @keyframes name
+//     0%   -> ключевые точки (на каком этапе будут происходить то или инное действие)
+//       opacity: 0   -> действие которое будет происходить
+//     100%
+//       opacity: 1
+
+
+@keyframes btnToUp
+    0%
+        opacity: 0
+        transform: translateY(5rem)
+    
+    100%
+        opacity: 1
+        transform: translateY(0)
+        
+
+@keyframes leftToRight
+    0%   
+        opacity: 0
+        transform: translateX(-10rem)
+    80%
+        transform: translateX(1rem)
+    100%
+        opacity: 1
+        transform: translateX(0)
+
+
+@keyframes rightToLeft
+    0%   
+        opacity: 0
+        transform: translateX(10rem)
+    80%
+        transform: translateX(-1rem)
+    100%
+        opacity: 1
+        transform: translateX(0)
+
+
+
+
